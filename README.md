@@ -7,6 +7,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ポケット勤怠は、従業員の出退勤記録、休暇申請、勤怠レポートを管理するためのウェブアプリケーションです。
+
+従業員・管理者・スーパー管理者それぞれの利用シーンを想定し、ロールベースのアクセス制御、企業単位の設定管理、勤怠・休暇情報の集約、部門別レポート、コンプライアンス確認までをカバーします。日々の勤怠管理を効率化するとともに、管理者が必要な情報を把握しやすい業務基盤として利用できることを重視しています。
+
+### 🎯 主な目的 | Goals
+
+- **勤怠業務の効率化** — 出退勤・休暇・レポートを一元管理
+- **管理業務の可視化** — 個人・部門単位で勤怠状況を確認
+- **コンプライアンス対応** — 残業・休憩・休日・深夜労働などを確認
+- **安全な権限管理** — ユーザーの役割に応じて操作範囲を制御
+- **将来の拡張性** — API・サービス層・データモデルを分離し、機能追加しやすい構成
+
 ![スクリーンショット 2025-03-16 0 58 26](https://github.com/user-attachments/assets/a7a4e016-61bd-4831-9d98-0a2acfbc9755)
 
 *This is a web application for managing employee attendance records, leave requests, and attendance reports.*
@@ -57,6 +68,9 @@
 
 ## 技術スタック | Tech Stack
 
+本プロジェクトは、型安全なフロントエンドとAPIバックエンド、リレーショナルデータベースを組み合わせた一般的なWebアプリケーション構成です。状態管理・データフェッチ・入力バリデーションなどの責務を分離し、開発・保守のしやすさを考慮しています。
+
+
 ### フロントエンド | Frontend
 - [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
 - [Zustand](https://github.com/pmndrs/zustand) (状態管理 | State management)
@@ -71,6 +85,9 @@
 - [Zod](https://zod.dev/) (バリデーション | Validation)
 
 ## 開発環境のセットアップ | Development Setup
+
+ローカル環境では、バックエンドとフロントエンドを個別に起動する方法に加え、Docker Compose を利用したセットアップにも対応しています。初期構築後は環境変数、データベースマイグレーション、API / フロントエンドの起動状態を確認してください。
+
 
 ### 前提条件 | Prerequisites
 - Node.js (v18.x 以上 | or higher)
@@ -116,6 +133,9 @@ docker-compose up -d
 
 ## 使用方法 | Usage
 
+起動後は、従業員・管理者の権限に応じて利用できる機能が切り替わります。開発環境では以下のURLからフロントエンド、バックエンドAPI、およびAPIドキュメントへアクセスできます。
+
+
 1. ブラウザで以下のURLにアクセス | Access the following URLs in your browser:
    - フロントエンド | Frontend: http://localhost:3000
    - バックエンドAPI | Backend API: http://localhost:5000
@@ -131,6 +151,9 @@ API の詳細なドキュメントは以下で確認できます | Detailed API 
 - 本番環境 | Production: https://api.attendance-system.example.com/api-docs
 
 ## プロジェクト構造 | Project Structure
+
+フロントエンドとバックエンドを分離し、バックエンドでは controllers / services / routes / middlewares、フロントエンドでは components / pages / hooks / store / services など、責務ごとにコードを整理しています。これにより、機能追加や変更の影響範囲を把握しやすくしています。
+
 
 ```
 attendance-system/
@@ -162,6 +185,9 @@ attendance-system/
 
 ## テスト | Testing
 
+バックエンド・フロントエンドのテストに加え、E2Eテストを実行できる構成を用意しています。新しい機能を追加する際には、既存機能への影響を確認しながらテストを追加・更新することを推奨します。
+
+
 ### バックエンドテスト | Backend Tests
 
 ```bash
@@ -188,6 +214,13 @@ npm test
 ```bash
 npm run test:e2e
 ```
+
+## 📌 開発・運用上の補足 | Notes
+
+- `.env` などの環境依存設定はリポジトリへ直接コミットせず、`.env.example` を基準に設定してください。
+- 本番環境では、デフォルト認証情報を必ず変更し、適切なシークレット管理を行ってください。
+- API・データベースへのアクセスは、利用環境に応じて認証・認可・ネットワーク制御を適切に設定してください。
+- 勤怠データは業務上重要な情報となるため、バックアップ、ログ管理、アクセス権限などの運用設計を環境に合わせて実施してください。
 
 ## ライセンス | License
 
